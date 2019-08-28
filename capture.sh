@@ -21,22 +21,22 @@ IR1MB="https://www.cwb.gov.tw/Data/satellite/LCC_IR1_MB_2750/LCC_IR1_MB_2750"
 #ADDRESS=$VISTRGB-$YESTERDAY
 array=($VISTRGB $IR1CR $IR1MB)
 
-# for pictureType in "${array[@]}"; do
-#     case ${pictureType} in 
-#     ${VISTRGB})  FOLDER=$(echo "真實色");;
-#     ${IR1CR}) FOLDER=$(echo "紅外線");;
-#     ${IR1MB}) FOLDER=$(echo "色調強化");;
-#     esac
-#     ADDRESS=$pictureType-$YESTERDAY
-#     for i in {00..23}; do
-#     HOUR=$i
-#         for j in {00..50..10}; do
-#         MINUTE=$j
-#         DATAADDRESS=$ADDRESS-$HOUR-$MINUTE$PICTURETYPE
-#         wget   $DATAADDRESS -U $USERAGENT -P ./$YESTERDAY/$FOLDER
-#         sleep 5
-#         done
-#     done
-# done
+for pictureType in "${array[@]}"; do
+    case ${pictureType} in 
+    ${VISTRGB})  FOLDER=$(echo "真實色");;
+    ${IR1CR}) FOLDER=$(echo "紅外線");;
+    ${IR1MB}) FOLDER=$(echo "色調強化");;
+    esac
+    ADDRESS=$pictureType-$YESTERDAY
+    for i in {00..23}; do
+    HOUR=$i
+        for j in {00..50..10}; do
+        MINUTE=$j
+        DATAADDRESS=$ADDRESS-$HOUR-$MINUTE$PICTURETYPE
+        wget   $DATAADDRESS -U $USERAGENT -P ./$YESTERDAY/$FOLDER
+        sleep 5
+        done
+    done
+done
 
 /usr/bin/rclone copy  --ignore-existing --verbose --transfers 2 --checkers 10 --contimeout 60s --timeout 300s --retries 3  --stats 1s /home/mk/DD2/weatherChartDaily/$YESTERDAY console-share:每日氣象圖/$YESTERDAY
