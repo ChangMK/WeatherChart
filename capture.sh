@@ -34,7 +34,6 @@ for pictureType in "${array[@]}"; do
         MINUTE=$j
         DATAADDRESS=$ADDRESS-$HOUR-$MINUTE$PICTURETYPE
         wget   $DATAADDRESS -U $USERAGENT -P ./$YESTERDAY/$FOLDER
-        sleep 5
         done
     done
 done
