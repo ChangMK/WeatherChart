@@ -25,9 +25,11 @@ CV1TW="https://www.cwb.gov.tw/Data/radar/CV1_TW_3600_"
 for chartType in "${array[@]}"; do
     case ${chartType} in 
     ${VISTRGB})  FOLDER=$(echo "真實色")
-                                ADDRESS=$(echo $chartType-$YESTERDAY);;
-    ${IR1CR}) FOLDER=$(echo "紅外線");;
-    ${IR1MB}) FOLDER=$(echo "色調強化");;
+                        ADDRESS=$(echo $chartType-$YESTERDAY);;
+    ${IR1CR}) FOLDER=$(echo "紅外線")
+                        ADDRESS=$(echo $chartType-$YESTERDAY);;
+    ${IR1MB}) FOLDER=$(echo "色調強化")
+                        ADDRESS=$(echo $chartType-$YESTERDAY);;
     ${CV1TW}) FOLDER=$(echo "雷達回波")
                         PICTURETYPE=$(echo ".png")
                         YESTERDAYNODASH=$(date +"%Y%m%d" -d @$(($TIMESTAMP-86400)))
