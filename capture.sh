@@ -12,6 +12,7 @@ PICTURETYPE=".jpg"
 USERAGENT="Mozilla/5.0"
 TIMESTAMP=$(date +"%s")
 YESTERDAY=$(date +"%Y-%m-%d" -d @$(($TIMESTAMP-86400)))
+YEAR=$(date +"%Y" -d @$(($TIMESTAMP-86400)))
 
 #真實色
 VISTRGB="https://www.cwb.gov.tw/Data/satellite/LCC_VIS_TRGB_2750/LCC_VIS_TRGB_2750"
@@ -44,10 +45,12 @@ for chartType in "${array[@]}"; do
             DATAADDRESS=$ADDRESS-$HOUR-$MINUTE$PICTURETYPE
             echo $DATAADDRESS
         else
-             DATAADDRESS=$ADDRESS$HOUR$MINUTE$PICTURETYPE   
-         fi    
+            DATAADDRESS=$ADDRESS$HOUR$MINUTE$PICTURETYPE   
+        fi    
         wget   $DATAADDRESS -U $USERAGENT -P $LOCAL$YESTERDAY/$FOLDER --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue
         done
     done
 done
 rclone copy  --ignore-existing --verbose --transfers 2 --checkers 10 --contimeout 60s --timeout 300s --retries 3  --stats 1s $LOCAL$YESTERDAY console-share:每日氣象圖/$YESTERDAY
+echo -e "Subject: Weather Chart Backup Finish\nTo:mk.pdtltd@gmail.com\n" | ssmtp mk.pdtltd@gmail.com
+find . -type d -ctime +1 -name "${YEAR}-*-*"  -exec rm -rf {} \;
