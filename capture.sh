@@ -55,4 +55,5 @@ for chartType in "${array[@]}"; do
 done
 rclone copy  --ignore-existing --verbose --transfers 2 --checkers 10 --contimeout 60s --timeout 300s --retries 3  --stats 1s $LOCAL$YESTERDAY console-share:每日氣象圖/$YEAR/$MONTH/$YESTERDAY
 echo -e "Subject: Weather Chart Backup Finish\nTo:mk.pdtltd@gmail.com\n" | ssmtp mk.pdtltd@gmail.com
+cd /home/mk/DD2/weatherChartDaily
 find . -type d -ctime +1 -name "${YEAR}-*-*"  -exec rm -rf {} \;
